@@ -20,7 +20,7 @@ public class Fila_Caracteres {
     private int tamanho;
     private int inicio;
     private int fim;
-    private String array[];
+    private int array[];
     private int quantElementos;
 
     public Fila_Caracteres() {
@@ -32,7 +32,7 @@ public class Fila_Caracteres {
             throw new RuntimeException("Tamanho deve ser maior do que zero\n");
         }
         this.tamanho = tamanho;
-        this.array = new String[tamanho];
+        this.array = new int[tamanho];
         inicio = 0;
         fim = 0;
         quantElementos = 0;
@@ -50,7 +50,7 @@ public class Fila_Caracteres {
         return quantElementos;
     }
 
-    public void enqueue(String elemento) {
+    public void enqueue(int elemento) {
         if (isFull()) {
             throw new RuntimeException("A fila está cheia!\n");
         }
@@ -67,7 +67,7 @@ public class Fila_Caracteres {
         quantElementos--;
     }
 
-    public String peek() {
+    public int peek() {
         if (isEmpty()) {
             throw new RuntimeException("A fila está vazia!\n");
         }

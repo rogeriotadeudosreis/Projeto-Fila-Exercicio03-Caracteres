@@ -32,57 +32,33 @@ public class ViewFilaCaracteres extends javax.swing.JFrame {
         initComponents();
     }
 
-    private String separarDigitos(String texto) {
-        int tamanho = texto.length();
-        fila = new Fila_Caracteres(tamanho);
-        filaAux = new Fila_Caracteres(tamanho);
-        pilha = new Pilha_Caracteres(tamanho);
-
-        String str = texto.trim();
-        String numSeparados = "";
-        String letras = "";
-        String resultado = "";
-
-        try {
-            System.out.printf("%s%16s%14s\n", "String do Usuário |",
-                    " Núm. Empilhado |", " Letra na Fila");
-            System.out.printf("%s", texto);
-            for (int i = 0; i < str.length(); i++) {
-                String aux = "" + str.charAt(i);
-                if (aux.matches("[0-9]*")) {
-                    numSeparados = "" + str.charAt(i);
-                    pilha.push(numSeparados);
-                    System.out.printf("%21s", numSeparados);
-                } else {
-                    letras = "" + str.charAt(i);
-                    filaAux.enqueue(letras);
-                    System.out.printf("%18s", letras + "\n");
-                }
-
+    public Fila_Caracteres func(String texto) {
+        Fila_Caracteres fila = new Fila_Caracteres(20);
+        Pilha_Caracteres pilha = new Pilha_Caracteres(20);
+        int temp;
+        for (int i = 0; i < texto.length(); i++) {
+            temp = texto.charAt(i);
+            if (texto.charAt(i) >= '0' && texto.charAt(i) <= '9') {
+                pilha.push(temp);
+            } else {
+                fila.enqueue(temp);
             }
-            System.out.println("---------------------------------------------------");
-
-            System.out.printf("%s", "Desempilhei os números e coloquei na fila auxiliar "
-                    + "junto com as letras.\n");
-            while (!pilha.isEmpty()) {
-                System.out.printf("%s\n", pilha.consultar());
-                filaAux.enqueue(pilha.pop());
-            }
-            System.out.println("---------------------------------------------------");
-            System.out.printf("%s", "Desinfeilrei as letras e números da fila "
-                    + "auxiliar e enfileirei na fila de origem\n");
-            while (!filaAux.isEmpty()) {
-                System.out.printf("%s ", filaAux.peek());
-                resultado += filaAux.peek();
-                fila.enqueue(filaAux.peek());
-                filaAux.dequeue();
-            }
-            System.out.println("");
-
-        } catch (Exception erro) {
-            JOptionPane.showMessageDialog(null, erro.getMessage());
         }
-        return resultado;
+
+        while (!pilha.isEmpty()) {
+            fila.enqueue(pilha.consultar());
+            pilha.pop();
+        }
+        return fila;
+    }
+
+    public static String mostrarFila(Fila_Caracteres fila) {
+        String aux = "";
+        while (!fila.isEmpty()) {
+            aux += (char) fila.peek();
+            fila.dequeue();
+        }
+        return aux;
     }
 
     /**
@@ -177,8 +153,8 @@ public class ViewFilaCaracteres extends javax.swing.JFrame {
     private void jButtonExecutarComandosDaFilaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExecutarComandosDaFilaActionPerformed
         // TODO add your handling code here:
         try {
-            jTextFieldResultadoDaFila.setText(separarDigitos(jTextFieldCaracteres.getText()) + "");
-            jButtonExecutarComandosDaFila.setEnabled(false);
+            fila = func(jTextFieldCaracteres.getText());
+            jTextFieldResultadoDaFila.setText(mostrarFila(fila));
 
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, erro.getMessage());

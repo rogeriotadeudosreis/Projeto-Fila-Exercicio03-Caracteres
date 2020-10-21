@@ -17,13 +17,13 @@ package br.com.rogerio.model;
  */
 public class Pilha_Caracteres {
     
-    private String elementos[];
+    private int elementos[];
     private int tamanho = 0;
     private int topo = -1 ;
 
     public Pilha_Caracteres(int tamanho) {
         this.tamanho = tamanho;
-        elementos = new String [tamanho];
+        elementos = new int [tamanho];
         topo = -1;
     }
     
@@ -35,7 +35,7 @@ public class Pilha_Caracteres {
         return topo == (elementos.length - 1);
     }
     
-   public void push(String elemento){
+   public void push(int elemento){
        if (isFull()) {
            throw new RuntimeException("Pilha cheia");
        }
@@ -43,17 +43,17 @@ public class Pilha_Caracteres {
        elementos[topo] = elemento;
    }
    
-   public String pop(){
+   public int pop(){
        if (isEmpty()) {
            throw new RuntimeException("A fila está vazia!\n");
        }
-       String elemento;
+       int elemento;
        elemento = elementos[topo];
        topo--;
        return elemento;
    }
    
-   public String consultar(){
+   public int consultar(){
        return elementos[topo];
    }
    
